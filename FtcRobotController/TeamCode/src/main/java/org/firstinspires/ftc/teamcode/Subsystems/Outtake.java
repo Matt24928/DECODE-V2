@@ -6,6 +6,7 @@ import android.graphics.Color;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.bylazar.configurables.annotations.Configurable;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -23,12 +24,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
-import org.firstinspires.ftc.teamcode.Autos.AutoRed_1;
+
 
 import java.util.Base64;
 import java.util.TreeMap;
 
 @Configurable
+@Disabled
 public class Outtake extends SubsystemBase {
     public DcMotorEx motor_shooter_1,motor_shooter_2;
     final double k1=1.03,k2=1.03,r=0.048;

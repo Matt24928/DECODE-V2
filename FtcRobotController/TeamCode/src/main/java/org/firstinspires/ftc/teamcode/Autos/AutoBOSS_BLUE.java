@@ -51,6 +51,7 @@ public class AutoBOSS_BLUE extends CommandOpMode {
 
 
     public Pose Out = new Pose(40,80);
+    public static Pose LastPose;
 
 
     public PathChain ScorePreload, GoTo1, Score1, GoTo2, Score2,GoTo3,GoToRamp,Score3, Exit;
@@ -203,6 +204,7 @@ public class AutoBOSS_BLUE extends CommandOpMode {
         follower.update();
         telemetry.addData("path",follower.getCurrentPath());
         telemetry.update();
+        LastPose = follower.getPose();
     }
 
 }

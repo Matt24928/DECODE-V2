@@ -4,6 +4,8 @@ import android.graphics.Color;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.math.MathFunctions;
+import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,6 +21,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.opencv.core.Mat;
+
 @Configurable
 public class OuttakeCommand extends SubsystemBase {
      public double ANG_departe = 0.17;
@@ -28,9 +32,9 @@ public class OuttakeCommand extends SubsystemBase {
     NormalizedColorSensor colorSensor2;
     DcMotorEx motor_shooter_1,motor_shooter_2;
     Servo jumper1,jumper2,angler;
-    final double P1 = 185,F1=19;
-    final double LOW1 = 0.7,JUMP1 = 0.48;
-    final double LOW2 = 0.17,JUMP2 = 0.35;
+    final double P1 = 201,F1=28;
+    final double LOW1 = 0.7,JUMP1 = 0.43;
+    final double LOW2 = 0.17,JUMP2 = 0.39;
     final double k1=1.03,k2=1.03,r=0.048;
     public float hue1,hue2,sat1,sat2,val1,val2;
     public double current1,currentAlert1,Ticks1,RPM1,AngularSpeed1,LiniarSpeed1;
@@ -77,13 +81,13 @@ public class OuttakeCommand extends SubsystemBase {
         AngularSpeed1 = motor_shooter_1.getVelocity(AngleUnit.RADIANS);
         LiniarSpeed1 = k1*AngularSpeed1*r;
 
-//        t.addLine("--Motor 1--");
-//        t.addData("Current (mA)", "%.1f", current1);
-//        t.addData("Alert Current (mA)", "%.1f", currentAlert1);
-//        t.addData("Ticks/sec", "%.1f", Ticks1);
-//        t.addData("RPM", "%.1f", RPM1);
-//        t.addData("Angular Speed (rad/s)", "%.2f", AngularSpeed1);
-//        t.addData("Linear Speed (m/s)", "%.2f", LiniarSpeed1);
+        t.addLine("--Motor 1--");
+        t.addData("Current (mA)", "%.1f", current1);
+        t.addData("Alert Current (mA)", "%.1f", currentAlert1);
+        t.addData("Ticks/sec", "%.1f", Ticks1);
+        t.addData("RPM", "%.1f", RPM1);
+        t.addData("Angular Speed (rad/s)", "%.2f", AngularSpeed1);
+        t.addData("Linear Speed (m/s)", "%.2f", LiniarSpeed1);
 
 
         current2 = motor_shooter_2.getCurrent(CurrentUnit.MILLIAMPS);
@@ -93,13 +97,13 @@ public class OuttakeCommand extends SubsystemBase {
         AngularSpeed2 = motor_shooter_2.getVelocity(AngleUnit.RADIANS);
         LiniarSpeed2 = k2*AngularSpeed2*r;
 
-//        t.addLine("--Motor 2--");
-//        t.addData("Current (mA)", "%.1f", current2);
-//        t.addData("Alert Current (mA)", "%.1f", currentAlert2);
-//        t.addData("Ticks/sec", "%.1f", Ticks2);
-//        t.addData("RPM", "%.1f", RPM2);
-//        t.addData("Angular Speed (rad/s)", "%.2f", AngularSpeed2);
-//        t.addData("Linear Speed (m/s)", "%.2f", LiniarSpeed2);
+        t.addLine("--Motor 2--");
+        t.addData("Current (mA)", "%.1f", current2);
+        t.addData("Alert Current (mA)", "%.1f", currentAlert2);
+        t.addData("Ticks/sec", "%.1f", Ticks2);
+        t.addData("RPM", "%.1f", RPM2);
+        t.addData("Angular Speed (rad/s)", "%.2f", AngularSpeed2);
+        t.addData("Linear Speed (m/s)", "%.2f", LiniarSpeed2);
 
         color1 = getDetectedColor1(t);
         color2 = getDetectedColor2(t);
@@ -115,12 +119,17 @@ public class OuttakeCommand extends SubsystemBase {
         t.addData("Current Angler Pos:", angler.getPosition());
         RPM = (RPM1+RPM2)/2;
         rpmmed = (Ticks1+Ticks2)/2;
-//        t.addData("RPM mediu:", RPM);
+        t.addData("RPM mediu:", RPM);
         t.addData("Ticks med:",rpmmed);
 
 
     }
-
+    public static double flywheelSpeed(double goadDist){
+        return (MathFunctions.clamp(0.00953626*Math.pow(goadDist,2) + 2.27592*goadDist + 893.53127,0,1400));
+    };
+    public static double hoodAngle(double goalDist){
+        return MathFunctions.clamp(1.53007-0.264419*Math.log(goalDist),0.05,0.6);
+   };
     private Outtake.DetectedColor detectColor(
             NormalizedColorSensor sensor,
             Telemetry telemetry,
@@ -170,6 +179,10 @@ public class OuttakeCommand extends SubsystemBase {
     public void ShootApr(){
         motor_shooter_1.setVelocity(targetRpm);
         motor_shooter_2.setVelocity(targetRpm);
+    }
+    public void autoSpeed(double speed){
+        motor_shooter_1.setVelocity(speed);
+        motor_shooter_2.setVelocity(speed);
     }
     public void stop2(){
         motor_shooter_1.setPower(0);

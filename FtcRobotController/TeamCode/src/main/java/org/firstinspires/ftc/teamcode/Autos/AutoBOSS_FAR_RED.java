@@ -35,14 +35,17 @@ public class AutoBOSS_FAR_RED extends CommandOpMode {
     public Pose Grab1 = new Pose(131.6, 18.4);
     public Pose Grab1ControlPoint = new Pose(92.3, 23.7);
     public Pose GoGet1 = new Pose(135.6, 12.4);
+    public Pose GetSpike1 = new Pose(129.5,35.6);
+    public Pose GetSpike1Control = new Pose(83,37);
 
 
     public Pose Exit_Launching_Zone = new Pose(83, 37);
 
 
-    public PathChain ScorePreload, GoTo1, Score1, Exit, Get1;
+    public PathChain ScorePreload, GoTo1, Score1, Exit, Get1, Spike,    Score_2;
 
     public SequentialCommandGroup Shoot1, Shoot2, Shootboth, ShootAll;
+    public static Pose LastPose;
 
 
 
@@ -71,18 +74,18 @@ public class AutoBOSS_FAR_RED extends CommandOpMode {
         Shootboth = new SequentialCommandGroup(
                 new InstantCommand(outtake::Jump1),
                 new InstantCommand(outtake::Jump2),
-                new TimerCommand(500),
+                new TimerCommand(300),
                 new InstantCommand(outtake::Low1),
                 new InstantCommand(outtake::Low2)
         );
 
         ShootAll = new SequentialCommandGroup(
-                new TimerCommand(2000),
+                new TimerCommand(1500),
                 Shoot1,
                 new InstantCommand(intake::eat),
-                new TimerCommand(1000),
+                new TimerCommand(900),
                 Shoot2,
-                new TimerCommand(1000),
+                new TimerCommand(900),
                 new InstantCommand(intake::zero),
                 Shootboth,
                 new InstantCommand(outtake::stop2)
@@ -116,16 +119,34 @@ public class AutoBOSS_FAR_RED extends CommandOpMode {
                 .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(67))
                 .build();
 
+        Score_2 = follower.pathBuilder()
+                .addPath(new BezierLine(GetSpike1, Score))
+                .addParametricCallback(0.1, ()-> outtake.Shoot())
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(67))
+                .build();
+
         Exit = follower.pathBuilder()
-                .addPath(new BezierLine(Score, Exit_Launching_Zone))
-                .setConstantHeadingInterpolation(Math.toRadians(90))
+                .addPath(new BezierLine(Score2, Exit_Launching_Zone))
+                .setConstantHeadingInterpolation(Math.toRadians(67))
+                .build();
+
+        Spike = follower.pathBuilder()
+                .addPath(new BezierCurve(Score, GetSpike1Control, GetSpike1))
+                .setLinearHeadingInterpolation(Math.toRadians(67), Math.toRadians(0))
+                .addParametricCallback(0.01, () -> intake.eat())
                 .build();
 
         schedule(new SequentialCommandGroup(
                 new PedroFollowPath(follower,ScorePreload),
-                new TimerCommand(4000),
                 ShootAll,
-                new TimerCommand(15000),
+                new PedroFollowPath(follower, Spike),
+                new PedroFollowPath(follower, Score_2),
+                ShootAll,
+                new PedroFollowPath(follower, GoTo1),
+                new PedroFollowPath(follower,Get1),
+                new TimerCommand(1000),
+                new PedroFollowPath(follower, Score1),
+                ShootAll,
                 new PedroFollowPath(follower, Exit)
 
         ));
@@ -137,6 +158,7 @@ public class AutoBOSS_FAR_RED extends CommandOpMode {
         follower.update();
         telemetry.addData("path",follower.getCurrentPath());
         telemetry.update();
+        LastPose = follower.getPose();
     }
 
 }

@@ -40,12 +40,13 @@ public class AutoBOSS_FAR_BLUE_GOOD extends CommandOpMode {
 
 
 
-    public Pose Exit_Launching_Zone = new Pose(59, 35);
+    public Pose Exit_Launching_Zone = new Pose(58, 33);
 
 
     public PathChain ScorePreload, GoTo1, Score1, Exit, Get1, Get2;
 
     public SequentialCommandGroup Shoot1, Shoot2, Shootboth, ShootAll;
+    public static Pose LastPose;
 
 
 
@@ -126,11 +127,12 @@ public class AutoBOSS_FAR_BLUE_GOOD extends CommandOpMode {
         schedule(new SequentialCommandGroup(
                 new PedroFollowPath(follower,ScorePreload),
                 ShootAll,
-                new PedroFollowPath(follower,GoTo1),
-                new TimerCommand(1000),
-                new PedroFollowPath(follower, Get1),
-                new PedroFollowPath(follower, Score1),
-                ShootAll,
+//                new PedroFollowPath(follower,GoTo1),
+//                new TimerCommand(1000),
+//                new PedroFollowPath(follower, Get1),
+//                new PedroFollowPath(follower, Score1),
+//                ShootAll,
+                new TimerCommand(20000),
                 new PedroFollowPath(follower, Exit)
 
         ));
@@ -142,6 +144,7 @@ public class AutoBOSS_FAR_BLUE_GOOD extends CommandOpMode {
         follower.update();
         telemetry.addData("path",follower.getCurrentPath());
         telemetry.update();
+        LastPose = follower.getPose();
     }
 
 }
