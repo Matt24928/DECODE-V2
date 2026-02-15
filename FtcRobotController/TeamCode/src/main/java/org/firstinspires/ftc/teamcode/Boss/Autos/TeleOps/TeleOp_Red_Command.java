@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
-
-import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
+package org.firstinspires.ftc.teamcode.Boss.Autos.TeleOps;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -10,38 +8,32 @@ import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.util.Timing;
 import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.gamepad.Gamepad;
-import com.bylazar.gamepad.GamepadPluginConfig;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.control.PIDFController;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
-import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.math.MathFunctions;
-import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Autos.AutoBOSS_BLUE;
-import org.firstinspires.ftc.teamcode.Autos.AutoBOSS_FAR_BLUE_GOOD;
-import org.firstinspires.ftc.teamcode.Autos.AutoBOSS_FAR_RED;
-import org.firstinspires.ftc.teamcode.Autos.AutoBOSS_RED;
+import org.firstinspires.ftc.teamcode.Boss.Autos.AutoBOSS_BLUE;
+import org.firstinspires.ftc.teamcode.Boss.Autos.AutoBOSS_FAR_BLUE_GOOD;
+import org.firstinspires.ftc.teamcode.Boss.Autos.AutoBOSS_FAR_RED;
+import org.firstinspires.ftc.teamcode.Boss.Autos.AutoBOSS_RED;
 import org.firstinspires.ftc.teamcode.Commands.TimerCommand;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.Limelight;
-import org.firstinspires.ftc.teamcode.Subsystems.OuttakeCommand;
+import org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.Limelight;
+import org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.OuttakeCommand;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
+
 @TeleOp
 @Configurable
+@Disabled
 //asta e teleopul principal merge la ambele aliante
 public class TeleOp_Red_Command extends CommandOpMode {
 

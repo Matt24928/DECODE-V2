@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems;
 
-import static org.firstinspires.ftc.teamcode.Subsystems.Intake.IntakeTimer;
+import static org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.Intake.IntakeTimer;
 
 import android.graphics.Color;
 
@@ -23,10 +23,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 
 
-import java.util.Base64;
 import java.util.TreeMap;
 
 @Configurable

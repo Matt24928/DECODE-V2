@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Configs;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,16 +9,19 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.Subsystems.Outtake;
+import org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.Outtake;
+import org.firstinspires.ftc.teamcode.Pluto.SubSystems.Intake;
+@Configurable
 
 @TeleOp(name = "Outtake Test", group = "Configs")
 public class OuttakeTest extends OpMode {
 
     public DcMotorEx shooter1,shooter2;
 
-    public double highVelocity = 1500;
-    public double lowVelocity = 500;
+    public static double highVelocity = 1500;
+    public static double lowVelocity = 500;
     Outtake outtake;
+    Intake intake;
 
     double curTargetVelocity = highVelocity;
 
@@ -31,11 +34,11 @@ public class OuttakeTest extends OpMode {
 
     @Override
     public void init() {
-        shooter1 = hardwareMap.get(DcMotorEx.class, "MotorShooter_2");
+        shooter1 = hardwareMap.get(DcMotorEx.class, "Motor_left");
         shooter1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter1.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        shooter2 = hardwareMap.get(DcMotorEx.class, "MotorShooter_1");
+        shooter2 = hardwareMap.get(DcMotorEx.class, "Motor_right");
         shooter2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter2.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -43,10 +46,17 @@ public class OuttakeTest extends OpMode {
         shooter1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         shooter2.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         telemetry.addLine("Init complete yay");
+        intake = new Intake(hardwareMap);
     }
 
     @Override
     public void loop(){
+        if(gamepad1.leftBumperWasPressed()){
+            intake.Eat();
+        }
+        if(gamepad1.rightBumperWasPressed()){
+            intake.Stop();
+        }
         if(gamepad1.yWasPressed()){
             if(curTargetVelocity == highVelocity){
                 curTargetVelocity = lowVelocity;

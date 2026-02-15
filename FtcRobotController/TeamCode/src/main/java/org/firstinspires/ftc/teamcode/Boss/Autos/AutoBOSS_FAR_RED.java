@@ -1,8 +1,6 @@
-package org.firstinspires.ftc.teamcode.Autos;
-import androidx.lifecycle.viewmodel.CreationExtras;
+package org.firstinspires.ftc.teamcode.Boss.Autos;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.pedropathing.follower.Follower;
@@ -11,16 +9,18 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.firstinspires.ftc.teamcode.Commands.PedroFollowPath;
 
 import org.firstinspires.ftc.teamcode.Commands.TimerCommand;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.Outtake;
-import org.firstinspires.ftc.teamcode.Subsystems.OuttakeCommand;
+import org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.Boss.Autos.Subsystems.OuttakeCommand;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 
 @Autonomous
+@Disabled
 public class AutoBOSS_FAR_RED extends CommandOpMode {
 
     private Follower follower;
