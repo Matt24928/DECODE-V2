@@ -15,15 +15,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 public class Outtake extends SubsystemBase {
 
     DcMotorEx MotorLeft,MotorRight;
-    Servo left,right,angler;
+    Servo left,right,angler,cargo_door;
     double shoot_velocity;
-    double p=95, f=17.9;
-    public static double vel = 1600;
-    double LOW1, LOW2, UP1, UP2;
+    double p=159.4, f=12.6;
+    public static double vel = 1600;//0.85 2300
+    public double LOW = 0.81, UP = 0.67, ANG_DEP = 0.85, VEL_DEP = 2300;
     public double current1,currentAlert1,Ticks1,RPM1,AngularSpeed1,LiniarSpeed1,TicksMed;
     public double current2,currentAlert2,Ticks2,RPM2,AngularSpeed2,LiniarSpeed2;
     public Outtake(HardwareMap hw){
-        MotorLeft = hw.get(DcMotorEx.class,"Motor_left");
+        MotorLeft = hw.get(DcMotorEx.class,"Motor_left");//142.4 12.6
         MotorLeft.setDirection(DcMotorSimple.Direction.REVERSE); //maybe
         MotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         PIDFCoefficients pidfCoefficients = new PIDFCoefficients(p,0,0,f);
@@ -43,9 +43,9 @@ public class Outtake extends SubsystemBase {
 
         left = hw.servo.get("Servo_l");
         right = hw.servo.get("Servo_r");
-        left.setDirection(Servo.Direction.REVERSE);
-        right.setPosition(0.5);
-        left.setPosition(0.5);
+        cargo_door = hw.servo.get("Clapita");
+        cargo_door.setPosition(1);
+
 
         angler = hw.servo.get("Angler");
         angler.setDirection(Servo.Direction.REVERSE);
@@ -66,23 +66,19 @@ public class Outtake extends SubsystemBase {
         MotorRight.setVelocity(0);
     }
     public void Down(){
-        left.setPosition(0.59);
-        right.setPosition(0.59);
+        cargo_door.setPosition(LOW);
     }
     public void Up(){
-        left.setPosition(0.8);
-        right.setPosition(0.8);
+        cargo_door.setPosition(UP);
     }
 
     public void MoveUp(){
-        left.setPosition(left.getPosition() + 0.03);
-        right.setPosition(right.getPosition() + 0.03);
+        cargo_door.setPosition(cargo_door.getPosition() + 0.03);
 
     }
 
     public void MoveDown(){
-        left.setPosition(left.getPosition() - 0.03);
-        right.setPosition(right.getPosition() - 0.03);
+        cargo_door.setPosition(cargo_door.getPosition() - 0.03);
 
     }
 
@@ -92,6 +88,13 @@ public class Outtake extends SubsystemBase {
 
     public void decrease_vel(){
         vel-=50;
+    }
+
+    public void Shoot_Dep(){
+        MotorLeft.setVelocity(VEL_DEP);
+        MotorRight.setVelocity(VEL_DEP);
+        angler.setPosition(ANG_DEP);
+
     }
 
 
@@ -114,6 +117,7 @@ public class Outtake extends SubsystemBase {
         t.addData("poz left",left.getPosition());
         t.addData("poz right",right.getPosition());
         t.addData("Angler: ",angler.getPosition());
+        t.addData("Clapita: ",cargo_door.getPosition());
     }
 
 

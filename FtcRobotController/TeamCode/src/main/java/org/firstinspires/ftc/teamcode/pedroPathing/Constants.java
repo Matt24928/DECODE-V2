@@ -19,16 +19,16 @@ public class Constants {
 
     public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(8)
-            .forwardZeroPowerAcceleration(-38.99020465409548)
-            .lateralZeroPowerAcceleration(-63.84859199559909)
+            .forwardZeroPowerAcceleration(-24.340289190171543)
+            .lateralZeroPowerAcceleration(-58.5451505330555)
             .useSecondaryTranslationalPIDF(false)
             .useSecondaryHeadingPIDF(false)
             .useSecondaryDrivePIDF(false)
-            .centripetalScaling(0.0007)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.055, 0, 0.001, 0.02))
-            .headingPIDFCoefficients(new PIDFCoefficients(1.5, 0, 0.001, 0.02))
+            .centripetalScaling(0.0001)
+            .translationalPIDFCoefficients(new PIDFCoefficients(0.034, 0, 0.001, 0.025))
+            .headingPIDFCoefficients(new PIDFCoefficients(1, 0, 0.001, 0.018))
             .drivePIDFCoefficients(
-                    new FilteredPIDFCoefficients(0.01, 0, 0.0001, 0.6, 0.01)
+                    new FilteredPIDFCoefficients(0.0075, 0, 0.00032, 0.6, 0.01)
             );
 
     public static MecanumConstants driveConstants = new MecanumConstants()
@@ -40,8 +40,8 @@ public class Constants {
             .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .xVelocity(87.24964292030634)
-            .yVelocity(65.49907870555487);
+            .xVelocity(87.65248119924952)
+            .yVelocity(72.33667953371062);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
             .forwardPodY(-4)//3,8

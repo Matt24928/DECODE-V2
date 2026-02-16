@@ -28,7 +28,7 @@ public class OuttakeCommand extends SubsystemBase {
     NormalizedColorSensor colorSensor2;
     DcMotorEx motor_shooter_1,motor_shooter_2;
     Servo jumper1,jumper2,angler;
-    final double P1 = 201,F1=28;
+    final double P1 = 159.4,F1=12.6;//159.4 12.6
     final double LOW1 = 0.7,JUMP1 = 0.43;
     final double LOW2 = 0.17,JUMP2 = 0.39;
     final double k1=1.03,k2=1.03,r=0.048;

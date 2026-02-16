@@ -35,7 +35,7 @@ public class Intake extends SubsystemBase {
 //    }
     public void Eat(){
         intake_1.setPower(1);
-        intake_2.setPower(0.7);
+        intake_2.setPower(1);
     }
     public void StopSus(){
         intake_2.setPower(0);
