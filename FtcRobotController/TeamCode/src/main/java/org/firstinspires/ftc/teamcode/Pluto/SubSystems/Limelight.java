@@ -8,12 +8,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 public class Limelight extends SubsystemBase {
-    private Limelight3A limelight;
+    public Limelight3A limelight;
     private LLResult llResult;
 
     public Limelight(HardwareMap hardwareMap) {
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(3); // AprilTag pipeline
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");// AprilTag pipeline
         limelight.setPollRateHz(100);
         limelight.start();
     }

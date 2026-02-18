@@ -18,8 +18,8 @@ public class OuttakeTest extends OpMode {
 
     public DcMotorEx shooter1,shooter2;
 
-    public static double highVelocity = 1500;
-    public static double lowVelocity = 500;
+    public static double highVelocity = 2100;
+    public static double lowVelocity = 1100;
     Outtake outtake;
     Intake intake;
 

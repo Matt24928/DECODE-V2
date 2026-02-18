@@ -16,10 +16,11 @@ public class Outtake extends SubsystemBase {
 
     DcMotorEx MotorLeft,MotorRight;
     Servo left,right,angler,cargo_door;
-    double shoot_velocity;
-    double p=159.4, f=12.6;
-    public static double vel = 1600;//0.85 2300
-    public double LOW = 0.81, UP = 0.67, ANG_DEP = 0.85, VEL_DEP = 2300;
+    public static double shoot_velocity;
+    public static double shoot_angle;
+    double p=162, f=12.7;
+    public static double vel = 1600, VEL_DEP = 1500, VEL_APR = 1090;
+    public double LOW = 0.96, UP = 0.5, ANG_DEP = 0.95, ANG_APR = 0.78;
     public double current1,currentAlert1,Ticks1,RPM1,AngularSpeed1,LiniarSpeed1,TicksMed;
     public double current2,currentAlert2,Ticks2,RPM2,AngularSpeed2,LiniarSpeed2;
     public Outtake(HardwareMap hw){
@@ -44,7 +45,7 @@ public class Outtake extends SubsystemBase {
         left = hw.servo.get("Servo_l");
         right = hw.servo.get("Servo_r");
         cargo_door = hw.servo.get("Clapita");
-        cargo_door.setPosition(1);
+        cargo_door.setPosition(0.96);
 
 
         angler = hw.servo.get("Angler");
@@ -56,6 +57,13 @@ public class Outtake extends SubsystemBase {
     }
     public void AnglerM(){
         angler.setPosition(angler.getPosition()-0.05);
+    }
+    public void ShootVelocity(double shoot_velocity){
+        MotorLeft.setVelocity(shoot_velocity);
+        MotorRight.setVelocity(shoot_velocity);
+    }
+    public void ShootAngle(double shoot_angle){
+        angler.setPosition(shoot_angle);
     }
     public void Shoot(){
         MotorLeft.setVelocity(vel);
@@ -97,6 +105,13 @@ public class Outtake extends SubsystemBase {
 
     }
 
+    public void Shoot_Apr(){
+        MotorLeft.setVelocity(VEL_APR);
+        MotorRight.setVelocity(VEL_APR);
+        angler.setPosition(ANG_APR);
+
+    }
+
 
     public void OuttakeData(Telemetry t){
         current1 = MotorLeft.getCurrent(CurrentUnit.MILLIAMPS);
@@ -119,7 +134,6 @@ public class Outtake extends SubsystemBase {
         t.addData("Angler: ",angler.getPosition());
         t.addData("Clapita: ",cargo_door.getPosition());
     }
-
 
 
 }

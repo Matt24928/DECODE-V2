@@ -18,15 +18,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Constants {
 
     public static FollowerConstants followerConstants = new FollowerConstants()
-            .mass(8)
-            .forwardZeroPowerAcceleration(-24.340289190171543)
-            .lateralZeroPowerAcceleration(-58.5451505330555)
+            .mass(10)
+            .forwardZeroPowerAcceleration(-22.719159224970472)
+            .lateralZeroPowerAcceleration(-53.70270913773273)
             .useSecondaryTranslationalPIDF(false)
             .useSecondaryHeadingPIDF(false)
             .useSecondaryDrivePIDF(false)
             .centripetalScaling(0.0001)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.034, 0, 0.001, 0.025))
-            .headingPIDFCoefficients(new PIDFCoefficients(1, 0, 0.001, 0.018))
+            .translationalPIDFCoefficients(new PIDFCoefficients(0.2, 0, 0.001, 0.02))
+            .headingPIDFCoefficients(new PIDFCoefficients(0.7, 0, 0.09, 0.018))
             .drivePIDFCoefficients(
                     new FilteredPIDFCoefficients(0.0075, 0, 0.00032, 0.6, 0.01)
             );
@@ -40,12 +40,12 @@ public class Constants {
             .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .xVelocity(87.65248119924952)
-            .yVelocity(72.33667953371062);
+            .xVelocity(90.98235363096703)
+            .yVelocity(72.85282357283464);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-4)//3,8
-            .strafePodX(0)//1.2
+            .forwardPodY(4.17)
+            .strafePodX(0)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .yawScalar(1.0)
@@ -58,8 +58,8 @@ public class Constants {
     public static PathConstraints pathConstraints = new PathConstraints(
             0.995,
             100,
-            0.6,
-            1
+            1.2,
+            0.8
     );
 
     public static Follower createFollower(HardwareMap hardwareMap) {

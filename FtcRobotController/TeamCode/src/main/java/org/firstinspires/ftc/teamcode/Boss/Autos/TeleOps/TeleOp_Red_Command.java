@@ -180,7 +180,7 @@ public class TeleOp_Red_Command extends CommandOpMode {
     public void run() {
 
         super.run();
-
+        headingPID.setCoefficients(pidfCoefficients);
         if(gamepad1.touchpadWasPressed()){
             autoHeading = !autoHeading;
             headingPID.reset();
