@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Pluto.SubSystems;
 
+import androidx.annotation.NonNull;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,9 +20,10 @@ public class Outtake extends SubsystemBase {
     Servo left,right,angler,cargo_door;
     public static double shoot_velocity;
     public static double shoot_angle;
-    double p=162, f=12.7;
-    public static double vel = 1600, VEL_DEP = 1500, VEL_APR = 1090;
-    public double LOW = 0.96, UP = 0.5, ANG_DEP = 0.95, ANG_APR = 0.78;
+    double p=130, f=12.3;
+    public boolean is_up;
+    public double vel = 1600, VEL_DEP = 1500, VEL_APR = 1100;
+    public double LOW = 0.96, UP = 0.5, ANG_DEP = 1, ANG_APR = 0.725;
     public double current1,currentAlert1,Ticks1,RPM1,AngularSpeed1,LiniarSpeed1,TicksMed;
     public double current2,currentAlert2,Ticks2,RPM2,AngularSpeed2,LiniarSpeed2;
     public Outtake(HardwareMap hw){
@@ -53,10 +56,18 @@ public class Outtake extends SubsystemBase {
 
     }
     public void AnglerP(){
-        angler.setPosition(angler.getPosition()+0.05);
+        angler.setPosition(angler.getPosition()+0.01);
     }
     public void AnglerM(){
-        angler.setPosition(angler.getPosition()-0.05);
+        angler.setPosition(angler.getPosition()-0.01);
+    }
+
+    public double GetPose(){
+        return angler.getPosition();
+    }
+
+    public double Cargo(){
+        return cargo_door.getPosition();
     }
     public void ShootVelocity(double shoot_velocity){
         MotorLeft.setVelocity(shoot_velocity);
@@ -75,27 +86,29 @@ public class Outtake extends SubsystemBase {
     }
     public void Down(){
         cargo_door.setPosition(LOW);
+        is_up = false;
     }
     public void Up(){
         cargo_door.setPosition(UP);
+        is_up = true;
     }
 
     public void MoveUp(){
-        cargo_door.setPosition(cargo_door.getPosition() + 0.03);
+        cargo_door.setPosition(cargo_door.getPosition() + 0.01);
 
     }
 
     public void MoveDown(){
-        cargo_door.setPosition(cargo_door.getPosition() - 0.03);
+        cargo_door.setPosition(cargo_door.getPosition() - 0.01);
 
     }
 
     public void increase_vel(){
-        vel+=50;
+        vel+=25;
     }
 
     public void decrease_vel(){
-        vel-=50;
+        vel-=25;
     }
 
     public void Shoot_Dep(){

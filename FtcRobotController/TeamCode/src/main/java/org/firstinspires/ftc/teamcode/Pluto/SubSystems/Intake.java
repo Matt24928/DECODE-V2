@@ -41,6 +41,11 @@ public class Intake extends SubsystemBase {
         intake_1.setPower(1);
         intake_2.setPower(1);
     }
+
+    public void Eat_mai_incet(){
+        intake_1.setPower(0.9);
+        intake_2.setPower(0.9);
+    }
     public void StopSus(){
         intake_2.setPower(0);
     }
